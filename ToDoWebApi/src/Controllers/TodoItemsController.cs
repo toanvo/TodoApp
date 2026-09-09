@@ -63,8 +63,7 @@ public class TodoItemsController : ControllerBase
         var updatedItem = _todoService.Update(new TodoItem
         {
             Id = id,
-            Title = title,
-            IsCompleted = false
+            Title = title
         });
         return Ok(updatedItem);
     }
