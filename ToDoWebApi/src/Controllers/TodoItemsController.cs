@@ -58,9 +58,14 @@ public class TodoItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<TodoItem> UpdateTodoItem(
         Guid id,
-        [FromBody] TodoItem request)
+        [FromBody] string title)
     {
-        var updatedItem = _todoService.Update(request);
+        var updatedItem = _todoService.Update(new TodoItem
+        {
+            Id = id,
+            Title = title,
+            IsCompleted = false
+        });
         return Ok(updatedItem);
     }
 

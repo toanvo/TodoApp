@@ -21,20 +21,20 @@ describe('AppComponent', () => {
     {
       id: '1',
       title: 'Learn Angular',
-      isCompleted: false
+      isCompleted: false,
     },
     {
       id: '2',
       title: 'Write unit tests',
-      isCompleted: false
-    }
+      isCompleted: false,
+    },
   ];
 
   beforeEach(async () => {
     todoService = {
       getTodos: vi.fn(),
       addTodo: vi.fn(),
-      deleteTodo: vi.fn()
+      deleteTodo: vi.fn(),
     };
 
     todoService.getTodos.mockReturnValue(of(mockTodos));
@@ -44,9 +44,9 @@ describe('AppComponent', () => {
       providers: [
         {
           provide: TodoService,
-          useValue: todoService
-        }
-      ]
+          useValue: todoService,
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -87,8 +87,7 @@ describe('AppComponent', () => {
     });
 
     it('should display all todos', () => {
-      const todoElements =
-        fixture.nativeElement.querySelectorAll('.todo-list li');
+      const todoElements = fixture.nativeElement.querySelectorAll('.todo-list li');
 
       expect(todoElements.length).toBe(2);
       expect(todoElements[0].textContent).toContain('Learn Angular');
@@ -100,24 +99,20 @@ describe('AppComponent', () => {
 
       fixture.detectChanges();
 
-      const emptyMessage =
-        fixture.nativeElement.querySelector('.todo-list p');
+      const emptyMessage = fixture.nativeElement.querySelector('.todo-list p');
 
       expect(emptyMessage).toBeTruthy();
-      expect(emptyMessage.textContent.trim())
-        .toBe('Your list is empty! Add a task above.');
+      expect(emptyMessage.textContent.trim()).toBe('Your list is empty! Add a task above.');
     });
 
     it('should not display the empty message when todos exist', () => {
-      const emptyMessage =
-        fixture.nativeElement.querySelector('.todo-list p');
+      const emptyMessage = fixture.nativeElement.querySelector('.todo-list p');
 
       expect(emptyMessage).toBeNull();
     });
 
     it('should render a delete button for every todo', () => {
-      const deleteButtons =
-        fixture.nativeElement.querySelectorAll('.delete-btn');
+      const deleteButtons = fixture.nativeElement.querySelectorAll('.delete-btn');
 
       expect(deleteButtons.length).toBe(2);
     });
@@ -129,15 +124,13 @@ describe('AppComponent', () => {
 
   describe('Todo title input', () => {
     it('should initially have an empty input', () => {
-      const input =
-        fixture.nativeElement.querySelector('input');
+      const input = fixture.nativeElement.querySelector('input');
 
       expect(input.value).toBe('');
     });
 
     it('should update the signal when the user enters text', () => {
-      const input =
-        fixture.nativeElement.querySelector('input');
+      const input = fixture.nativeElement.querySelector('input');
 
       input.value = 'Buy milk';
       input.dispatchEvent(new Event('input'));
@@ -151,9 +144,8 @@ describe('AppComponent', () => {
       component.newTodoTitle.set('Learn Angular');
       await fixture.whenStable();
       fixture.detectChanges();
-      
-      const input =
-        fixture.nativeElement.querySelector('input');
+
+      const input = fixture.nativeElement.querySelector('input');
 
       expect(input.value).toBe('Learn Angular');
     });
@@ -169,10 +161,9 @@ describe('AppComponent', () => {
 
       fixture.detectChanges();
 
-      const button =
-        fixture.nativeElement.querySelector(
-          '.input-group button'
-        ) as HTMLButtonElement;
+      const button = fixture.nativeElement.querySelector(
+        '.input-group button',
+      ) as HTMLButtonElement;
 
       expect(button.disabled).toBe(true);
     });
@@ -182,10 +173,9 @@ describe('AppComponent', () => {
 
       fixture.detectChanges();
 
-      const button =
-        fixture.nativeElement.querySelector(
-          '.input-group button'
-        ) as HTMLButtonElement;
+      const button = fixture.nativeElement.querySelector(
+        '.input-group button',
+      ) as HTMLButtonElement;
 
       expect(button.disabled).toBe(true);
     });
@@ -195,27 +185,23 @@ describe('AppComponent', () => {
 
       fixture.detectChanges();
 
-      const button =
-        fixture.nativeElement.querySelector(
-          '.input-group button'
-        ) as HTMLButtonElement;
+      const button = fixture.nativeElement.querySelector(
+        '.input-group button',
+      ) as HTMLButtonElement;
 
       expect(button.disabled).toBe(false);
     });
 
     it('should call addTodo when the Add button is clicked', () => {
-      const addTodoSpy = vi
-        .spyOn(component, 'addTodo')
-        .mockImplementation(() => {});
+      const addTodoSpy = vi.spyOn(component, 'addTodo').mockImplementation(() => {});
 
       component.newTodoTitle.set('Buy milk');
 
       fixture.detectChanges();
 
-      const button =
-        fixture.nativeElement.querySelector(
-          '.input-group button'
-        ) as HTMLButtonElement;
+      const button = fixture.nativeElement.querySelector(
+        '.input-group button',
+      ) as HTMLButtonElement;
 
       button.click();
 
@@ -229,17 +215,14 @@ describe('AppComponent', () => {
 
   describe('Enter key', () => {
     it('should call addTodo when Enter is pressed', () => {
-      const addTodoSpy = vi
-        .spyOn(component, 'addTodo')
-        .mockImplementation(() => {});
+      const addTodoSpy = vi.spyOn(component, 'addTodo').mockImplementation(() => {});
 
-      const input =
-        fixture.nativeElement.querySelector('input');
+      const input = fixture.nativeElement.querySelector('input');
 
       input.dispatchEvent(
         new KeyboardEvent('keyup', {
-          key: 'Enter'
-        })
+          key: 'Enter',
+        }),
       );
 
       expect(addTodoSpy).toHaveBeenCalledTimes(1);
@@ -256,8 +239,8 @@ describe('AppComponent', () => {
         {
           id: '3',
           title: 'New task',
-          isCompleted: false
-        }
+          isCompleted: false,
+        },
       ];
 
       todoService.getTodos.mockReturnValue(of(todos));
@@ -268,22 +251,15 @@ describe('AppComponent', () => {
     });
 
     it('should handle an error when loading todos', () => {
-      const consoleError = vi
-        .spyOn(console, 'error')
-        .mockImplementation(() => {});
+      const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const error = new Error('Failed to fetch todos');
 
-      todoService.getTodos.mockReturnValue(
-        throwError(() => error)
-      );
+      todoService.getTodos.mockReturnValue(throwError(() => error));
 
       component.loadTodos();
 
-      expect(consoleError).toHaveBeenCalledWith(
-        'Failed to fetch todos',
-        error
-      );
+      expect(consoleError).toHaveBeenCalledWith('Failed to fetch todos', error);
 
       consoleError.mockRestore();
     });
@@ -314,7 +290,7 @@ describe('AppComponent', () => {
       const newTodo: TodoItem = {
         id: '3',
         title: 'Buy milk',
-        isCompleted: false
+        isCompleted: false,
       };
 
       todoService.addTodo.mockReturnValue(of(newTodo));
@@ -323,15 +299,14 @@ describe('AppComponent', () => {
 
       component.addTodo();
 
-      expect(todoService.addTodo)
-        .toHaveBeenCalledWith('Buy milk');
+      expect(todoService.addTodo).toHaveBeenCalledWith('Buy milk');
     });
 
     it('should add the new todo to the signal', () => {
       const newTodo: TodoItem = {
         id: '3',
         title: 'Buy milk',
-        isCompleted: false
+        isCompleted: false,
       };
 
       todoService.addTodo.mockReturnValue(of(newTodo));
@@ -340,17 +315,14 @@ describe('AppComponent', () => {
 
       component.addTodo();
 
-      expect(component.todos()).toEqual([
-        ...mockTodos,
-        newTodo
-      ]);
+      expect(component.todos()).toEqual([...mockTodos, newTodo]);
     });
 
     it('should clear the input after successfully adding a todo', () => {
       const newTodo: TodoItem = {
         id: '3',
         title: 'Buy milk',
-        isCompleted: false
+        isCompleted: false,
       };
 
       todoService.addTodo.mockReturnValue(of(newTodo));
@@ -363,24 +335,17 @@ describe('AppComponent', () => {
     });
 
     it('should handle an error when adding a todo', () => {
-      const consoleError = vi
-        .spyOn(console, 'error')
-        .mockImplementation(() => {});
+      const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const error = new Error('Failed to add todo');
 
-      todoService.addTodo.mockReturnValue(
-        throwError(() => error)
-      );
+      todoService.addTodo.mockReturnValue(throwError(() => error));
 
       component.newTodoTitle.set('Buy milk');
 
       component.addTodo();
 
-      expect(consoleError).toHaveBeenCalledWith(
-        'Failed to add todo',
-        error
-      );
+      expect(consoleError).toHaveBeenCalledWith('Failed to add todo', error);
 
       // The title should remain because the operation failed.
       expect(component.newTodoTitle()).toBe('Buy milk');
@@ -398,59 +363,52 @@ describe('AppComponent', () => {
       const newTodo: TodoItem = {
         id: '3',
         title: 'Buy groceries',
-        isCompleted: false
+        isCompleted: false,
       };
 
       todoService.addTodo.mockReturnValue(of(newTodo));
 
-      const input =
-        fixture.nativeElement.querySelector('input');
+      const input = fixture.nativeElement.querySelector('input');
 
-      const button =
-        fixture.nativeElement.querySelector(
-          '.input-group button'
-        ) as HTMLButtonElement;
+      const button = fixture.nativeElement.querySelector(
+        '.input-group button',
+      ) as HTMLButtonElement;
 
       input.value = 'Buy groceries';
       input.dispatchEvent(new Event('input'));
       await fixture.whenStable();
       fixture.detectChanges();
-      
+
       expect(button.disabled).toBe(false);
 
       button.click();
-      
+
       fixture.detectChanges();
 
       await fixture.whenStable();
 
-      expect(todoService.addTodo)
-        .toHaveBeenCalledWith('Buy groceries');
+      expect(todoService.addTodo).toHaveBeenCalledWith('Buy groceries');
 
-      const todoElements =
-        fixture.nativeElement.querySelectorAll('.todo-list li');
+      const todoElements = fixture.nativeElement.querySelectorAll('.todo-list li');
 
       expect(todoElements.length).toBe(3);
-      expect(todoElements[2].textContent)
-        .toContain('Buy groceries');
+      expect(todoElements[2].textContent).toContain('Buy groceries');
     });
 
     it('should clear the input after adding a todo through the UI', async () => {
       const newTodo: TodoItem = {
         id: '3',
         title: 'Buy groceries',
-        isCompleted: false
+        isCompleted: false,
       };
 
       todoService.addTodo.mockReturnValue(of(newTodo));
 
-      const input =
-        fixture.nativeElement.querySelector('input');
+      const input = fixture.nativeElement.querySelector('input');
 
-      const button =
-        fixture.nativeElement.querySelector(
-          '.input-group button'
-        ) as HTMLButtonElement;
+      const button = fixture.nativeElement.querySelector(
+        '.input-group button',
+      ) as HTMLButtonElement;
 
       input.value = 'Buy groceries';
       input.dispatchEvent(new Event('input'));
@@ -475,8 +433,7 @@ describe('AppComponent', () => {
 
       component.deleteTodo('1');
 
-      expect(todoService.deleteTodo)
-        .toHaveBeenCalledWith('1');
+      expect(todoService.deleteTodo).toHaveBeenCalledWith('1');
     });
 
     it('should remove the todo after successful deletion', () => {
@@ -486,21 +443,15 @@ describe('AppComponent', () => {
 
       component.deleteTodo('1');
 
-      expect(component.todos()).toEqual([
-        mockTodos[1]
-      ]);
+      expect(component.todos()).toEqual([mockTodos[1]]);
     });
 
     it('should not remove the todo when deletion fails', () => {
-      const consoleError = vi
-        .spyOn(console, 'error')
-        .mockImplementation(() => {});
+      const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const error = new Error('Failed to delete todo');
 
-      todoService.deleteTodo.mockReturnValue(
-        throwError(() => error)
-      );
+      todoService.deleteTodo.mockReturnValue(throwError(() => error));
 
       component.todos.set(mockTodos);
 
@@ -508,10 +459,7 @@ describe('AppComponent', () => {
 
       expect(component.todos()).toEqual(mockTodos);
 
-      expect(consoleError).toHaveBeenCalledWith(
-        'Failed to delete todo',
-        error
-      );
+      expect(consoleError).toHaveBeenCalledWith('Failed to delete todo', error);
 
       consoleError.mockRestore();
     });
@@ -525,8 +473,7 @@ describe('AppComponent', () => {
     it('should delete the correct todo when Delete is clicked', () => {
       todoService.deleteTodo.mockReturnValue(of(void 0));
 
-      const deleteButtons =
-        fixture.nativeElement.querySelectorAll('.delete-btn');
+      const deleteButtons = fixture.nativeElement.querySelectorAll('.delete-btn');
 
       expect(deleteButtons.length).toBe(2);
 
@@ -535,18 +482,14 @@ describe('AppComponent', () => {
 
       fixture.detectChanges();
 
-      expect(todoService.deleteTodo)
-        .toHaveBeenCalledWith('1');
+      expect(todoService.deleteTodo).toHaveBeenCalledWith('1');
 
-      const todoElements =
-        fixture.nativeElement.querySelectorAll('.todo-list li');
+      const todoElements = fixture.nativeElement.querySelectorAll('.todo-list li');
 
       expect(todoElements.length).toBe(1);
-      expect(todoElements[0].textContent)
-        .toContain('Write unit tests');
+      expect(todoElements[0].textContent).toContain('Write unit tests');
 
-      expect(todoElements[0].textContent)
-        .not.toContain('Learn Angular');
+      expect(todoElements[0].textContent).not.toContain('Learn Angular');
     });
 
     it('should update the empty state after deleting the last todo', async () => {
@@ -554,8 +497,8 @@ describe('AppComponent', () => {
         {
           id: '1',
           title: 'Learn Angular',
-          isCompleted: false
-        }
+          isCompleted: false,
+        },
       ];
 
       component.todos.set(singleTodo);
@@ -564,10 +507,7 @@ describe('AppComponent', () => {
 
       fixture.detectChanges();
 
-      const deleteButton =
-        fixture.nativeElement.querySelector(
-          '.delete-btn'
-        ) as HTMLButtonElement;
+      const deleteButton = fixture.nativeElement.querySelector('.delete-btn') as HTMLButtonElement;
 
       deleteButton.click();
 
@@ -575,41 +515,29 @@ describe('AppComponent', () => {
 
       fixture.detectChanges();
 
-      const emptyMessage =
-        fixture.nativeElement.querySelector('.todo-list p');
+      const emptyMessage = fixture.nativeElement.querySelector('.todo-list p');
 
       expect(emptyMessage).toBeTruthy();
-      expect(emptyMessage.textContent.trim())
-        .toBe('Your list is empty! Add a task above.');
+      expect(emptyMessage.textContent.trim()).toBe('Your list is empty! Add a task above.');
     });
 
     it('should keep the todo visible when deletion fails', () => {
-      vi.spyOn(console, 'error')
-        .mockImplementation(() => {});
+      vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      todoService.deleteTodo.mockReturnValue(
-        throwError(() => new Error('Delete failed'))
-      );
+      todoService.deleteTodo.mockReturnValue(throwError(() => new Error('Delete failed')));
 
       fixture.detectChanges();
 
-      const deleteButton =
-        fixture.nativeElement.querySelector(
-          '.delete-btn'
-        ) as HTMLButtonElement;
+      const deleteButton = fixture.nativeElement.querySelector('.delete-btn') as HTMLButtonElement;
 
       deleteButton.click();
 
       fixture.detectChanges();
 
-      const todoElements =
-        fixture.nativeElement.querySelectorAll('.todo-list li');
+      const todoElements = fixture.nativeElement.querySelectorAll('.todo-list li');
 
       expect(todoElements.length).toBe(2);
-      expect(todoElements[0].textContent)
-        .toContain('Learn Angular');
+      expect(todoElements[0].textContent).toContain('Learn Angular');
     });
   });
 });
-
-
