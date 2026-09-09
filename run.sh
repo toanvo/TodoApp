@@ -27,7 +27,7 @@ echo ""
 echo "Starting .NET 10 backend..."
 
 cd "$BACKEND_DIR"
-dotnet run --no-launch-profile &
+dotnet run &
 BACKEND_PID=$!
 
 echo "Backend PID: $BACKEND_PID"
@@ -64,7 +64,7 @@ echo ""
 echo "======================================"
 echo " Application is running"
 echo "======================================"
-echo " Backend:  http://localhost:5000"
+echo " Backend:  http://localhost:5190"
 echo " Frontend: http://localhost:4200"
 echo ""
 echo " Press Ctrl+C to stop both applications"
