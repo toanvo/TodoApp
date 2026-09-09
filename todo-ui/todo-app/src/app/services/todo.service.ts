@@ -8,7 +8,7 @@ import { TodoItem } from '../models/TodoItem';
 })
 export class TodoService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5190/api/todoitems';
+  private apiUrl = 'http://localhost:5000/api/todoitems';
 
   getTodos(): Observable<TodoItem[]> {
     return this.http.get<TodoItem[]>(this.apiUrl);
