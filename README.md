@@ -4,7 +4,7 @@ This is the ToDo App
 
 # TodoApp Back end
 
-Please run the run.sh under BASH application to launch the application.
+Please run command below with BASH to launch the application.
 
 ```bash
 ./run.sh
