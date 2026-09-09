@@ -19,5 +19,4 @@ chmod +x run.sh
 
 ## Note
 
-There are a lot of rooms for improvement, security, vulnerability in packages of .Net, secret string and key, url. etc.
-At UI side, I don't have enough time to implement updating the title feature.
+"There is a lot of room for improvement regarding security, .NET package vulnerabilities, secret strings and keys, URLs, etc.
