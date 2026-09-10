@@ -4,7 +4,7 @@ This is the ToDo App
 
 # TodoApp Back end
 
-Please run command below with BASH to launch the application.
+Run command below with BASH to launch the application.
 
 ```bash
 ./run.sh
@@ -27,4 +27,4 @@ http://localhost:5190/swagger/index.html
 
 ## Note
 
-"There is a lot of room for improvement regarding security, .NET package vulnerabilities, secret strings and keys, URLs, etc.
+There is a lot of room for improvement regarding security, .NET package vulnerabilities, secret strings and keys, URLs, etc.
