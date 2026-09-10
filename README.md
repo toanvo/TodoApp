@@ -17,6 +17,14 @@ chmod +x run.sh
 ./run.sh
 ```
 
+# Swagger UI
+
+The swagger link with description of WebApi at backend
+
+```CSharp
+http://localhost:5190/swagger/index.html
+```
+
 ## Note
 
 "There is a lot of room for improvement regarding security, .NET package vulnerabilities, secret strings and keys, URLs, etc.
